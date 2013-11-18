@@ -1,0 +1,33 @@
+Here is a form to create a new short url
+
+ALso here is a list of all the url's that exist (if not logged in), or all the url's that the user has made (if they are logged in)
+
+
+<div class="container">
+  <%= link_to "Log in", login_path %>  <br>
+  <%= link_to "Create account", new_user_path %>  <br>
+
+  <h1>Shorten your url!</h1>
+
+  <%= form_for(@url) do |form_builder| %>
+    Enter url: <%=form_builder.text_field :long_url %>
+    <%= form_builder.submit %>
+  <% end %>
+
+  <br>
+
+  <table border="1" cellpadding="10">
+    <tr>
+      <th>Link</th>
+      <th>Visits</th>
+    </tr>
+    <% @urls.sort_by! { |url| url.click_count } %>
+    <% @urls.reverse_each do |url| %>
+    <tr>
+      <td> <%= link_to url.short_url, url_path(url), :method => :put %></a></td>
+      <td><%= url.click_count %></td>
+    </tr>
+    <% end %>
+  </table>
+
+</div>
